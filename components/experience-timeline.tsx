@@ -44,7 +44,7 @@ const experiences = [
 
 export function ExperienceTimeline() {
   return (
-    <section className="py-20 px-4">
+    <section id="experience" className="py-20 px-4">
       <div className="container mx-auto max-w-4xl">
         {/* Section Header */}
         <motion.div
@@ -110,7 +110,10 @@ export function ExperienceTimeline() {
                         <p className="text-xs text-muted-foreground command-text">achievements:</p>
                         <ul className="space-y-2">
                           {exp.achievements.map((achievement, i) => (
-                            <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <li
+                              key={i}
+                              className="text-sm text-muted-foreground flex items-start gap-2"
+                            >
                               <span className="text-accent mt-0.5">›</span>
                               <span>{achievement}</span>
                             </li>

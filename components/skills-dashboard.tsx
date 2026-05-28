@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Code2, Database, Smartphone, Cloud, Cpu, Zap } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 const skillCategories = [
   {
@@ -42,7 +43,25 @@ const skillCategories = [
   },
 ];
 
+const rotatingMainSkills = ['React', 'Next.js', 'TypeScript', 'Golang', 'React Native', 'OpenAI'];
+
 export function SkillsDashboard() {
+  const [activeSkillIndex, setActiveSkillIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+  const backgroundTextY = useTransform(scrollYProgress, [0, 1], [-50, 430]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSkillIndex((prev) => (prev + 1) % rotatingMainSkills.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -65,8 +84,63 @@ export function SkillsDashboard() {
   };
 
   return (
-    <section className="py-20 px-4">
-      <div className="container mx-auto max-w-6xl">
+    <section id="skills" ref={sectionRef} className="py-20 px-4 relative overflow-hidden isolate">
+      {/* Decorative rotating background skill text */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.985 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.65, ease: 'easeOut' }}
+        style={{ y: backgroundTextY }}
+        className="pointer-events-none absolute left-1/2 -top-4 -translate-x-1/2 text-center -z-10"
+      >
+        <motion.span
+          animate={{ opacity: [0.12, 0.24, 0.12] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+          className="relative inline-block w-[min(96vw,1160px)] h-[clamp(6rem,19vw,14rem)] select-none whitespace-nowrap font-mono"
+        >
+          <svg
+            viewBox="0 0 1000 220"
+            className="w-full h-full overflow-visible"
+            role="presentation"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="skills-stroke-gradient" x1="0%" y1="50%" x2="100%" y2="50%">
+                <stop offset="0%" stopColor="hsl(var(--primary) / 0.9)" />
+                <stop offset="50%" stopColor="hsl(var(--accent) / 0.9)" />
+                <stop offset="100%" stopColor="hsl(var(--secondary) / 0.9)" />
+              </linearGradient>
+              <filter id="skills-stroke-glow" x="-20%" y="-50%" width="140%" height="220%">
+                <feGaussianBlur stdDeviation="2.2" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <text
+              x="500"
+              y="150"
+              textAnchor="middle"
+              fill="none"
+              stroke="url(#skills-stroke-gradient)"
+              strokeWidth="3.2"
+              filter="url(#skills-stroke-glow)"
+              style={{
+                fontSize: '190px',
+                fontWeight: 900,
+                letterSpacing: '0.015em',
+                fontFamily:
+                  '"JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+              }}
+            >
+              {rotatingMainSkills[activeSkillIndex]}
+            </text>
+          </svg>
+        </motion.span>
+      </motion.div>
+
+      <div className="container mx-auto max-w-6xl relative z-20">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -96,11 +170,7 @@ export function SkillsDashboard() {
           {skillCategories.map((category) => {
             const Icon = category.icon;
             return (
-              <motion.div
-                key={category.name}
-                variants={itemVariants}
-                className="group"
-              >
+              <motion.div key={category.name} variants={itemVariants} className="group">
                 <div className="glass rounded-xl p-6 h-full hover:border-white/20 transition-all duration-300 glow-primary">
                   {/* Header */}
                   <div className="flex items-center gap-3 mb-4">
@@ -133,15 +203,15 @@ export function SkillsDashboard() {
                         <span className="text-primary group-hover/skill:text-accent transition-colors">
                           {'>'}
                         </span>
-                        <span className="group-hover/skill:text-foreground transition-colors">{skill}</span>
+                        <span className="group-hover/skill:text-foreground transition-colors">
+                          {skill}
+                        </span>
                       </motion.div>
                     ))}
                   </div>
 
                   {/* Bottom glowing line */}
-                  <motion.div
-                    className="mt-6 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  />
+                  <motion.div className="mt-6 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </motion.div>
             );

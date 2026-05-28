@@ -1,9 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Code2, Github, ExternalLink, ArrowDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const typingTexts = [
   'Building SaaS',
@@ -12,49 +12,104 @@ const typingTexts = [
   'Shipping AI Products',
 ];
 
+const navItems = [
+  { label: 'Skills', id: 'skills' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Contact', id: 'contact' },
+];
+
 export function HeroPremium() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const [currentText, setCurrentText] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 140]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.45]);
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      const text = typingTexts[currentText];
-      if (!isDeleting) {
-        if (displayText.length < text.length) {
-          setDisplayText(text.substring(0, displayText.length + 1));
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(
+      () => {
+        const text = typingTexts[currentText];
+        if (!isDeleting) {
+          if (displayText.length < text.length) {
+            setDisplayText(text.substring(0, displayText.length + 1));
+          } else {
+            setTimeout(() => setIsDeleting(true), 2000);
+          }
         } else {
-          setTimeout(() => setIsDeleting(true), 2000);
+          if (displayText.length > 0) {
+            setDisplayText(displayText.substring(0, displayText.length - 1));
+          } else {
+            setIsDeleting(false);
+            setCurrentText((prev) => (prev + 1) % typingTexts.length);
+          }
         }
-      } else {
-        if (displayText.length > 0) {
-          setDisplayText(displayText.substring(0, displayText.length - 1));
-        } else {
-          setIsDeleting(false);
-          setCurrentText((prev) => (prev + 1) % typingTexts.length);
-        }
-      }
-    }, isDeleting ? 50 : 100);
+      },
+      isDeleting ? 50 : 100,
+    );
 
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, currentText]);
 
   return (
-    <section className="min-h-screen flex items-center pt-20 overflow-hidden relative bg-background">
+    <section
+      ref={sectionRef}
+      className="min-h-screen flex items-center pt-20 overflow-hidden relative bg-background"
+    >
       {/* Magenta Orb Grid Background */}
-      <div
+      <motion.div
         className="absolute inset-0 z-0"
         style={{
-          background: "hsl(var(--background))",
+          y: isMounted ? backgroundY : 0,
+          background: 'hsl(var(--background))',
           backgroundImage: `
             linear-gradient(to right, hsl(var(--muted-foreground) / 0.14) 1px, transparent 1px),
             linear-gradient(to bottom, hsl(var(--muted-foreground) / 0.14) 1px, transparent 1px),
             radial-gradient(circle at 50% 60%, hsl(var(--secondary) / 0.18) 0%, hsl(var(--primary) / 0.08) 40%, transparent 70%)
           `,
-          backgroundSize: "40px 40px, 40px 40px, 100% 100%",
+          backgroundSize: '40px 40px, 40px 40px, 100% 100%',
         }}
       />
-      <div className="container mx-auto px-4 relative z-10">
+      <motion.div
+        className="container mx-auto px-4 relative z-10"
+        style={isMounted ? { y: contentY, opacity: contentOpacity } : { y: 0, opacity: 1 }}
+      >
+        <motion.nav
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 z-20"
+        >
+          <div className="glass rounded-full px-2 py-2 flex items-center gap-1 border border-border/70">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => scrollToSection(item.id)}
+                className="px-3 py-1.5 text-xs sm:text-sm command-text text-muted-foreground hover:text-foreground hover:bg-white/10 rounded-full transition-colors duration-200"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </motion.nav>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Side - Terminal Intro */}
           <motion.div
@@ -65,8 +120,7 @@ export function HeroPremium() {
           >
             {/* Terminal label */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-sm command-text text-primary">
-              <Code2 size={14} />
-              $ whoami
+              <Code2 size={14} />$ whoami
             </div>
 
             {/* Main heading */}
@@ -80,7 +134,8 @@ export function HeroPremium() {
               </h1>
 
               <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-                Full Stack Engineer specializing in React, React Native, Next.js, TypeScript, Golang, AI-powered apps, and scalable product engineering.
+                Full Stack Engineer specializing in React, React Native, Next.js, TypeScript,
+                Golang, AI-powered apps, and scalable product engineering.
               </p>
             </div>
 
@@ -99,24 +154,21 @@ export function HeroPremium() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-8">
-              <motion.div
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   size="lg"
                   className="btn-primary gap-2 group relative shadow-xl shadow-primary/30 w-full sm:w-auto"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     View Projects
-                    <ExternalLink size={18} className="group-hover:translate-x-2 transition-transform duration-300" />
+                    <ExternalLink
+                      size={18}
+                      className="group-hover:translate-x-2 transition-transform duration-300"
+                    />
                   </span>
                 </Button>
               </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   size="lg"
                   className="btn-primary-outline gap-2 group relative shadow-lg shadow-primary/20 w-full sm:w-auto"
@@ -177,7 +229,9 @@ export function HeroPremium() {
                   <div className="terminal-dot bg-yellow-500" />
                   <div className="terminal-dot bg-green-500" />
                 </div>
-                <div className="ml-3 text-xs text-muted-foreground command-text flex-1">portfolio.tsx</div>
+                <div className="ml-3 text-xs text-muted-foreground command-text flex-1">
+                  portfolio.tsx
+                </div>
               </div>
 
               {/* Code content */}
@@ -267,7 +321,10 @@ export function HeroPremium() {
         >
           <ArrowDown className="text-muted-foreground" size={24} />
         </motion.div>
-      </div>
+      </motion.div>
+
+      {/* Smooth transition into the next section */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-36 bg-gradient-to-b from-transparent via-background/80 to-background" />
     </section>
   );
 }

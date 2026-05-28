@@ -8,7 +8,8 @@ const projects = [
   {
     id: 1,
     title: 'AI Learning Platform',
-    description: 'Full-stack SaaS platform for AI-powered language learning with real-time progress tracking and personalized curriculum.',
+    description:
+      'Full-stack SaaS platform for AI-powered language learning with real-time progress tracking and personalized curriculum.',
     image: 'bg-gradient-to-br from-primary/20 to-secondary/20',
     tech: ['Next.js', 'TypeScript', 'OpenAI', 'Stripe', 'Supabase'],
     impact: '50K+ active users',
@@ -21,7 +22,8 @@ const projects = [
   {
     id: 2,
     title: 'Mobile Commerce App',
-    description: 'Cross-platform e-commerce mobile app with offline-first architecture, real-time inventory sync, and native performance.',
+    description:
+      'Cross-platform e-commerce mobile app with offline-first architecture, real-time inventory sync, and native performance.',
     image: 'bg-gradient-to-br from-accent/20 to-primary/20',
     tech: ['React Native', 'Expo', 'Firebase', 'Redux', 'Node.js'],
     impact: '$5M revenue',
@@ -34,7 +36,8 @@ const projects = [
   {
     id: 3,
     title: 'Developer Dashboard',
-    description: 'Real-time analytics dashboard for API monitoring, metrics visualization, and performance optimization insights.',
+    description:
+      'Real-time analytics dashboard for API monitoring, metrics visualization, and performance optimization insights.',
     image: 'bg-gradient-to-br from-primary/20 to-accent/20',
     tech: ['React', 'GraphQL', 'PostgreSQL', 'Golang', 'WebSocket'],
     impact: '10K+ developers',
@@ -47,7 +50,8 @@ const projects = [
   {
     id: 4,
     title: 'Infrastructure Automation',
-    description: 'DevOps platform for automated deployment, scaling, and monitoring with multi-cloud support and disaster recovery.',
+    description:
+      'DevOps platform for automated deployment, scaling, and monitoring with multi-cloud support and disaster recovery.',
     image: 'bg-gradient-to-br from-secondary/20 to-accent/20',
     tech: ['Docker', 'Kubernetes', 'Go', 'AWS', 'Terraform'],
     impact: '99.99% uptime',
@@ -60,7 +64,8 @@ const projects = [
   {
     id: 5,
     title: 'Content AI Assistant',
-    description: 'Intelligent content generation tool with multi-modal support, style transfer, and real-time collaboration features.',
+    description:
+      'Intelligent content generation tool with multi-modal support, style transfer, and real-time collaboration features.',
     image: 'bg-gradient-to-br from-secondary/20 to-primary/20',
     tech: ['Next.js', 'OpenAI', 'Vercel AI', 'Prisma', 'Redis'],
     impact: '100K+ generations',
@@ -73,7 +78,8 @@ const projects = [
   {
     id: 6,
     title: 'Real-time Communication',
-    description: 'Enterprise messaging platform with E2E encryption, file sharing, and video conferencing built with WebRTC.',
+    description:
+      'Enterprise messaging platform with E2E encryption, file sharing, and video conferencing built with WebRTC.',
     image: 'bg-gradient-to-br from-primary/20 to-secondary/20',
     tech: ['Socket.io', 'WebRTC', 'Node.js', 'MongoDB', 'React'],
     impact: '1M+ messages/day',
@@ -108,7 +114,7 @@ export function ProjectsShowcase() {
   };
 
   return (
-    <section className="py-20 px-4">
+    <section id="projects" className="py-20 px-4">
       <div className="container mx-auto max-w-7xl">
         {/* Section Header */}
         <motion.div
@@ -124,7 +130,8 @@ export function ProjectsShowcase() {
           </div>
           <h2 className="text-5xl font-bold text-foreground mb-4">Elite Project Showcase</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Selected projects representing my expertise in full-stack development, scalable architecture, and product engineering.
+            Selected projects representing my expertise in full-stack development, scalable
+            architecture, and product engineering.
           </p>
         </motion.div>
 
@@ -145,9 +152,7 @@ export function ProjectsShowcase() {
             >
               <div className="glass rounded-xl overflow-hidden h-full flex flex-col glow-primary hover:border-white/20 transition-all duration-300">
                 {/* Project Image Area */}
-                <div
-                  className={`h-48 ${project.image} relative overflow-hidden`}
-                >
+                <div className={`h-48 ${project.image} relative overflow-hidden`}>
                   {/* Terminal header overlay */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/60 backdrop-blur-sm">
                     <Code2 size={48} className="text-foreground" />
@@ -165,7 +170,8 @@ export function ProjectsShowcase() {
                     }}
                     className="absolute inset-0 opacity-20"
                     style={{
-                      backgroundImage: 'linear-gradient(45deg, hsl(var(--primary) / 0.6) 1px, transparent 1px)',
+                      backgroundImage:
+                        'linear-gradient(45deg, hsl(var(--primary) / 0.6) 1px, transparent 1px)',
                       backgroundSize: '20px 20px',
                     }}
                   />
@@ -179,7 +185,9 @@ export function ProjectsShowcase() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-muted-foreground mb-4 flex-1 leading-relaxed">{project.description}</p>
+                  <p className="text-sm text-muted-foreground mb-4 flex-1 leading-relaxed">
+                    {project.description}
+                  </p>
 
                   {/* Impact & Role */}
                   <div className="space-y-2 mb-4 pb-4 border-t border-white/5">
@@ -210,11 +218,11 @@ export function ProjectsShowcase() {
 
                   {/* Links */}
                   <div className="flex gap-2">
-                    {project.links.map((link) => {
+                    {project.links.map((link, index) => {
                       const Icon = link.icon;
                       return (
                         <Button
-                          key={link.href}
+                          key={`${project.id}-${link.href}-${index}`}
                           variant="outline"
                           size="sm"
                           asChild

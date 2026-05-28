@@ -1,23 +1,21 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Twitter, Send, Terminal } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { motion } from 'framer-motion';
+import { Github, Linkedin, Mail, Twitter, Send, Terminal } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useState } from 'react';
 
 export function ContactTerminal() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+    name: '',
+    email: '',
+    message: '',
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -29,19 +27,19 @@ export function ContactTerminal() {
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: '', email: '', message: '' });
     }, 3000);
   };
 
   const socialLinks = [
-    { icon: Github, label: "GitHub", href: "#" },
-    { icon: Linkedin, label: "LinkedIn", href: "#" },
-    { icon: Twitter, label: "Twitter", href: "#" },
-    { icon: Mail, label: "Email", href: "mailto:hello@example.com" },
+    { icon: Github, label: 'GitHub', href: '#' },
+    { icon: Linkedin, label: 'LinkedIn', href: '#' },
+    { icon: Twitter, label: 'Twitter', href: '#' },
+    { icon: Mail, label: 'Email', href: 'mailto:hello@example.com' },
   ];
 
   return (
-    <section className="py-20 px-4">
+    <section id="contact" className="py-20 px-4">
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
         <motion.div
@@ -53,16 +51,11 @@ export function ContactTerminal() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent/30 bg-accent/5 mb-4">
             <Terminal size={16} className="text-accent" />
-            <span className="text-sm command-text text-accent">
-              $ send-message --to="me"
-            </span>
+            <span className="text-sm command-text text-accent">$ send-message --to="me"</span>
           </div>
-          <h2 className="text-5xl font-bold text-foreground mb-4">
-            Let&apos;s Build Together
-          </h2>
+          <h2 className="text-5xl font-bold text-foreground mb-4">Let&apos;s Build Together</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Have an idea? Want to collaborate? Let&apos;s connect and create
-            something amazing.
+            Have an idea? Want to collaborate? Let&apos;s connect and create something amazing.
           </p>
         </motion.div>
 
@@ -102,9 +95,7 @@ export function ContactTerminal() {
                     >
                       ✓
                     </motion.div>
-                    <div className="text-primary command-text">
-                      Message sent successfully!
-                    </div>
+                    <div className="text-primary command-text">Message sent successfully!</div>
                     <div className="text-sm text-muted-foreground">
                       I&apos;ll get back to you as soon as possible.
                     </div>
@@ -114,7 +105,7 @@ export function ContactTerminal() {
                     {/* Name */}
                     <div className="space-y-2">
                       <label className="text-sm text-muted-foreground command-text flex items-center gap-2">
-                        <span className="text-primary">{">"}</span>
+                        <span className="text-primary">{'>'}</span>
                         Your Name
                       </label>
                       <Input
@@ -130,7 +121,7 @@ export function ContactTerminal() {
                     {/* Email */}
                     <div className="space-y-2">
                       <label className="text-sm text-muted-foreground command-text flex items-center gap-2">
-                        <span className="text-primary">{">"}</span>
+                        <span className="text-primary">{'>'}</span>
                         Your Email
                       </label>
                       <Input
@@ -147,7 +138,7 @@ export function ContactTerminal() {
                     {/* Message */}
                     <div className="space-y-2">
                       <label className="text-sm text-muted-foreground command-text flex items-center gap-2">
-                        <span className="text-primary">{">"}</span>
+                        <span className="text-primary">{'>'}</span>
                         Message
                       </label>
                       <Textarea
@@ -181,11 +172,9 @@ export function ContactTerminal() {
                 {!submitted && (
                   <div className="border-t border-border/40 pt-6 space-y-2">
                     <div className="text-xs text-muted-foreground command-text">
-                      {">"} response_time: instant
+                      {'>'} response_time: instant
                     </div>
-                    <div className="text-xs text-primary command-text">
-                      {">"} status: ready
-                    </div>
+                    <div className="text-xs text-primary command-text">{'>'} status: ready</div>
                   </div>
                 )}
               </div>
@@ -229,7 +218,7 @@ export function ContactTerminal() {
                             {link.label}
                           </div>
                           <div className="text-xs text-muted-foreground command-text">
-                            {"$ open"} {link.label}
+                            {'$ open'} {link.label}
                           </div>
                         </div>
                       </div>
@@ -241,30 +230,18 @@ export function ContactTerminal() {
 
             {/* Quick Stats */}
             <div className="glass rounded-xl p-8 glow-primary">
-              <h3 className="text-lg font-semibold text-foreground mb-6">
-                Response Time
-              </h3>
+              <h3 className="text-lg font-semibold text-foreground mb-6">Response Time</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Email Response
-                  </span>
-                  <span className="text-sm font-semibold text-accent command-text">
-                    24 hours
-                  </span>
+                  <span className="text-sm text-muted-foreground">Email Response</span>
+                  <span className="text-sm font-semibold text-accent command-text">24 hours</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Project Inquiry
-                  </span>
-                  <span className="text-sm font-semibold text-primary command-text">
-                    2-3 days
-                  </span>
+                  <span className="text-sm text-muted-foreground">Project Inquiry</span>
+                  <span className="text-sm font-semibold text-primary command-text">2-3 days</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Collaboration
-                  </span>
+                  <span className="text-sm text-muted-foreground">Collaboration</span>
                   <span className="text-sm font-semibold text-secondary command-text">
                     Always open
                   </span>
@@ -276,17 +253,15 @@ export function ContactTerminal() {
             <motion.div
               animate={{
                 boxShadow: [
-                  "0 0 20px hsl(var(--primary) / 0.3)",
-                  "0 0 40px hsl(var(--primary) / 0.6)",
+                  '0 0 20px hsl(var(--primary) / 0.3)',
+                  '0 0 40px hsl(var(--primary) / 0.6)',
                 ],
               }}
               transition={{ duration: 2, repeat: Infinity }}
               className="glass rounded-xl p-6 border-accent/50"
             >
               <div className="text-sm text-muted-foreground command-text mb-2">{`$ echo "Let's build something epic"`}</div>
-              <p className="text-lg font-semibold text-accent">
-                Ready to collaborate?
-              </p>
+              <p className="text-lg font-semibold text-accent">Ready to collaborate?</p>
             </motion.div>
           </motion.div>
         </div>
