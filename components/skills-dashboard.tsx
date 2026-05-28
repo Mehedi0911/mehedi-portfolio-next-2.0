@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { Code2, Database, Smartphone, Cloud, Cpu, Zap } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -118,24 +118,31 @@ export function SkillsDashboard() {
                 </feMerge>
               </filter>
             </defs>
-            <text
-              x="500"
-              y="150"
-              textAnchor="middle"
-              fill="none"
-              stroke="url(#skills-stroke-gradient)"
-              strokeWidth="3.2"
-              filter="url(#skills-stroke-glow)"
-              style={{
-                fontSize: '190px',
-                fontWeight: 900,
-                letterSpacing: '0.015em',
-                fontFamily:
-                  '"JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-              }}
-            >
-              {rotatingMainSkills[activeSkillIndex]}
-            </text>
+            <AnimatePresence mode="wait">
+              <motion.text
+                key={rotatingMainSkills[activeSkillIndex]}
+                x="500"
+                y="150"
+                textAnchor="middle"
+                fill="none"
+                stroke="url(#skills-stroke-gradient)"
+                strokeWidth="3.2"
+                filter="url(#skills-stroke-glow)"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.55, ease: 'easeInOut' }}
+                style={{
+                  fontSize: '190px',
+                  fontWeight: 900,
+                  letterSpacing: '0.015em',
+                  fontFamily:
+                    '"JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                }}
+              >
+                {rotatingMainSkills[activeSkillIndex]}
+              </motion.text>
+            </AnimatePresence>
           </svg>
         </motion.span>
       </motion.div>

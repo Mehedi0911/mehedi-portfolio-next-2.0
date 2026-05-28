@@ -1,9 +1,9 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Code2, Github, ExternalLink, ArrowDown } from 'lucide-react';
+import { Code2, Github, ExternalLink, ArrowDown, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 const typingTexts = [
   'Building SaaS',
@@ -19,12 +19,26 @@ const navItems = [
   { label: 'Contact', id: 'contact' },
 ];
 
+const pickRandomIndices = (total: number, min: number, max: number) => {
+  const count = Math.floor(Math.random() * (max - min + 1)) + min;
+  const pool = Array.from({ length: total }, (_, i) => i);
+
+  for (let i = pool.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+
+  return new Set(pool.slice(0, count));
+};
+
 export function HeroPremium() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isMounted, setIsMounted] = useState(false);
   const [currentText, setCurrentText] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [activeVerticalBatch, setActiveVerticalBatch] = useState<Set<number>>(new Set());
+  const [activeHorizontalBatch, setActiveHorizontalBatch] = useState<Set<number>>(new Set());
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
@@ -32,6 +46,24 @@ export function HeroPremium() {
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.45]);
+  const verticalPulseLines = useMemo(
+    () =>
+      Array.from({ length: 20 }, (_, i) => ({
+        position: ((i * 17 + 11) % 100) + '%',
+        delay: ((i * 29) % 23) / 10,
+        duration: 1.8 + ((i * 13) % 11) / 10,
+      })),
+    [],
+  );
+  const horizontalPulseLines = useMemo(
+    () =>
+      Array.from({ length: 14 }, (_, i) => ({
+        position: ((i * 23 + 7) % 100) + '%',
+        delay: ((i * 31) % 19) / 10,
+        duration: 2 + ((i * 7) % 12) / 10,
+      })),
+    [],
+  );
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -41,6 +73,18 @@ export function HeroPremium() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    const runBatch = () => {
+      setActiveVerticalBatch(pickRandomIndices(verticalPulseLines.length, 3, 7));
+      setActiveHorizontalBatch(pickRandomIndices(horizontalPulseLines.length, 2, 5));
+    };
+
+    runBatch();
+    const interval = setInterval(runBatch, 1100);
+
+    return () => clearInterval(interval);
+  }, [verticalPulseLines.length, horizontalPulseLines.length]);
 
   useEffect(() => {
     const timeout = setTimeout(
@@ -78,14 +122,63 @@ export function HeroPremium() {
         style={{
           y: isMounted ? backgroundY : 0,
           background: 'hsl(var(--background))',
-          backgroundImage: `
-            linear-gradient(to right, hsl(var(--muted-foreground) / 0.14) 1px, transparent 1px),
-            linear-gradient(to bottom, hsl(var(--muted-foreground) / 0.14) 1px, transparent 1px),
-            radial-gradient(circle at 50% 60%, hsl(var(--secondary) / 0.18) 0%, hsl(var(--primary) / 0.08) 40%, transparent 70%)
-          `,
-          backgroundSize: '40px 40px, 40px 40px, 100% 100%',
+          backgroundImage:
+            'radial-gradient(circle at 50% 60%, hsl(var(--secondary) / 0.18) 0%, hsl(var(--primary) / 0.08) 40%, transparent 70%)',
+          backgroundSize: '100% 100%',
         }}
       />
+      <motion.div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          y: isMounted ? backgroundY : 0,
+          backgroundSize: '100% 100%',
+        }}
+        animate={{
+          opacity: [0, 0.7, 0],
+          backgroundImage: [
+            'radial-gradient(circle at 50% 60%, hsl(var(--primary) / 0.144) 0%, hsl(var(--accent) / 0.084) 42%, transparent 72%)',
+            'radial-gradient(circle at 58% 52%, hsl(var(--primary) / 0.18) 0%, hsl(var(--accent) / 0.096) 42%, transparent 72%)',
+            'radial-gradient(circle at 43% 66%, hsl(var(--primary) / 0.132) 0%, hsl(var(--accent) / 0.072) 42%, transparent 72%)',
+            'radial-gradient(circle at 50% 60%, hsl(var(--primary) / 0.144) 0%, hsl(var(--accent) / 0.084) 42%, transparent 72%)',
+          ],
+        }}
+        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{
+          y: isMounted ? backgroundY : 0,
+          backgroundImage:
+            'linear-gradient(to right, hsl(var(--muted-foreground) / 0.11) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--muted-foreground) / 0.11) 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+        }}
+      />
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {verticalPulseLines.map((line, index) => (
+          <motion.div
+            key={`v-line-${line.position}-${index}`}
+            className="absolute top-0 bottom-0 w-px bg-muted-foreground/35"
+            style={{ left: line.position }}
+            animate={{ opacity: activeVerticalBatch.has(index) ? 0.42 : 0.06 }}
+            transition={{
+              duration: 0.5,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+        {horizontalPulseLines.map((line, index) => (
+          <motion.div
+            key={`h-line-${line.position}-${index}`}
+            className="absolute left-0 right-0 h-px bg-muted-foreground/30"
+            style={{ top: line.position }}
+            animate={{ opacity: activeHorizontalBatch.has(index) ? 0.34 : 0.05 }}
+            transition={{
+              duration: 0.5,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+      </div>
       <motion.div
         className="container mx-auto px-4 relative z-10"
         style={isMounted ? { y: contentY, opacity: contentOpacity } : { y: 0, opacity: 1 }}
@@ -94,7 +187,7 @@ export function HeroPremium() {
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 z-20"
+          className="absolute top-0 right-4 sm:right-6 lg:right-8 z-20"
         >
           <div className="glass rounded-full px-2 py-2 flex items-center gap-1 border border-border/70">
             {navItems.map((item) => (
@@ -126,10 +219,10 @@ export function HeroPremium() {
             {/* Main heading */}
             <div className="space-y-4">
               <h1 className="text-5xl lg:text-7xl font-bold text-foreground leading-tight">
-                Software Engineer
+                Mehedi Mosharrof
                 <br />
                 <span className="bg-linear-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-                  Building Scale
+                  Software Engineer
                 </span>
               </h1>
 
@@ -170,8 +263,9 @@ export function HeroPremium() {
               </motion.div>
               <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
                 <Button
+                  variant="ghost"
                   size="lg"
-                  className="btn-primary-outline gap-2 group relative shadow-lg shadow-primary/20 w-full sm:w-auto"
+                  className="border-2 border-primary bg-transparent text-primary hover:bg-transparent hover:text-primary gap-2 group relative shadow-lg shadow-primary/20 w-full sm:w-auto"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     <Github size={18} />
@@ -230,7 +324,7 @@ export function HeroPremium() {
                   <div className="terminal-dot bg-green-500" />
                 </div>
                 <div className="ml-3 text-xs text-muted-foreground command-text flex-1">
-                  portfolio.tsx
+                  resume.tsx
                 </div>
               </div>
 
@@ -242,7 +336,7 @@ export function HeroPremium() {
                   transition={{ delay: 0.5 }}
                   className="text-accent"
                 >
-                  {'export const Portfolio = () => {'}
+                  {'export const downloadResume = () => {'}
                 </motion.div>
 
                 <motion.div
@@ -251,52 +345,61 @@ export function HeroPremium() {
                   transition={{ delay: 0.6 }}
                   className="ml-4 text-muted-foreground"
                 >
-                  <span className="text-secondary">return</span> {`(`}
+                  {'const link = document.createElement("a")'}
                 </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.7 }}
-                  className="ml-8 text-muted-foreground"
+                  className="ml-4 text-muted-foreground"
                 >
-                  <span className="text-accent">{'<Section'}</span>
+                  {"link.href = '/resume.pdf'"}
                 </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.8 }}
-                  className="ml-12 text-primary"
+                  className="ml-4 text-muted-foreground"
                 >
-                  title<span className="text-muted-foreground">={`"Elite Dev"`}</span>
+                  {"link.download = 'Mehedi-Mosharrof-Resume.pdf'"}
                 </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.9 }}
-                  className="ml-8 text-accent"
+                  className="ml-4 text-muted-foreground"
                 >
-                  {'/>'}
+                  {'link.click()'}
                 </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1 }}
-                  className="ml-4 text-muted-foreground"
+                  className="text-accent"
                 >
-                  {')'}
+                  {'}'}
                 </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.1 }}
-                  className="text-accent"
+                  className="pt-2"
                 >
-                  {'}'}
+                  <Button
+                    variant="outline"
+                    asChild
+                    className="inline-flex border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary command-text"
+                  >
+                    <a href="/Mehedi_Mosharrof_Resume.pdf" download="Mehedi_Mosharrof_Resume.pdf">
+                      <Download size={16} className="mr-2" />
+                      Download Resume
+                    </a>
+                  </Button>
                 </motion.div>
               </div>
             </div>

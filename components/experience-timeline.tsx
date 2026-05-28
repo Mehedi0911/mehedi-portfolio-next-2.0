@@ -44,8 +44,24 @@ const experiences = [
 
 export function ExperienceTimeline() {
   return (
-    <section id="experience" className="py-20 px-4">
-      <div className="container mx-auto max-w-4xl">
+    <section id="experience" className="py-20 px-4 relative bg-black overflow-hidden">
+      {/* Dark Noise Colored Background */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background: '#000000',
+          backgroundImage: `
+            radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.2) 1px, transparent 0),
+            radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.18) 1px, transparent 0),
+            radial-gradient(circle at 1px 1px, rgba(236, 72, 153, 0.15) 1px, transparent 0)
+          `,
+          backgroundSize: '20px 20px, 30px 30px, 25px 25px',
+          backgroundPosition: '0 0, 10px 10px, 15px 5px',
+        }}
+      />
+      <div className="absolute inset-0 z-0 bg-black/30" />
+
+      <div className="container mx-auto max-w-4xl relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

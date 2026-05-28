@@ -8,7 +8,8 @@ const projects = [
   {
     id: 1,
     title: 'E-commerce Platform',
-    description: 'Full-stack marketplace with real-time inventory management and payment processing',
+    description:
+      'Full-stack marketplace with real-time inventory management and payment processing',
     tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Stripe'],
     color: 'from-primary/20 to-secondary/20',
     accentColor: 'text-primary',
@@ -69,11 +70,10 @@ export function ProjectsSection() {
             <span className="command-text text-sm uppercase">projects</span>
             <span className="code-bracket">{`>`}</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            Featured Work
-          </h2>
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Featured Work</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Handpicked projects showcasing my expertise in full-stack development and problem-solving
+            Handpicked projects showcasing my expertise in full-stack development and
+            problem-solving
           </p>
         </div>
 
@@ -94,7 +94,10 @@ export function ProjectsSection() {
                       {project.title}
                     </CardTitle>
                   </div>
-                  <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-accent transition-colors shrink-0" />
+                  <ArrowUpRight
+                    size={18}
+                    className="text-muted-foreground group-hover:text-accent transition-colors shrink-0"
+                  />
                 </div>
                 <CardDescription className="text-muted-foreground">
                   {project.description}
@@ -133,9 +136,7 @@ export function ProjectsSection() {
           <p className="text-muted-foreground text-sm">
             Interested in discussing how I can help with your project?
           </p>
-          <div className="mt-4 text-accent font-medium">
-            {'>'} Contact me
-          </div>
+          <div className="mt-4 text-accent font-medium">{'>'} Contact me</div>
         </div>
       </div>
     </section>

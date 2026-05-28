@@ -13,7 +13,7 @@ export function HeroSection() {
     <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Grid background effect */}
       <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--primary)/0.08)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.08)_1px,transparent_1px)] bg-size-[40px_40px] -z-10" />
-      
+
       <div className="max-w-6xl w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
@@ -28,21 +28,18 @@ export function HeroSection() {
             <div className="space-y-4">
               <div className="flex items-baseline gap-2 text-accent">
                 <span className="code-bracket">{`<`}</span>
-                <h1 className="text-5xl sm:text-6xl font-bold tracking-tight">
-                  Developer
-                </h1>
+                <h1 className="text-5xl sm:text-6xl font-bold tracking-tight">Developer</h1>
               </div>
               <div className="flex items-baseline gap-2 text-foreground">
-                <h1 className="text-5xl sm:text-6xl font-bold tracking-tight">
-                  Portfolio
-                </h1>
+                <h1 className="text-5xl sm:text-6xl font-bold tracking-tight">Portfolio</h1>
                 <span className="code-bracket">{`/>`}</span>
               </div>
             </div>
 
             {/* Subtitle */}
             <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Crafting elegant solutions through code. Full-stack developer passionate about building performant, accessible web experiences.
+              Crafting elegant solutions through code. Full-stack developer passionate about
+              building performant, accessible web experiences.
             </p>
 
             {/* Code snippet style */}
@@ -66,7 +63,10 @@ export function HeroSection() {
               >
                 <span className="relative z-10 flex items-center gap-2">
                   View My Work
-                  <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform duration-300" />
+                  <ArrowRight
+                    size={18}
+                    className="group-hover:translate-x-2 transition-transform duration-300"
+                  />
                 </span>
               </Button>
               <Button
@@ -101,19 +101,26 @@ export function HeroSection() {
                 <div className="p-6 space-y-4 font-mono text-sm">
                   <div className="text-accent">
                     <span className="text-muted-foreground">1</span>
-                    <span className="ml-4">{'const'}</span> portfolio <span className="text-accent">=</span> {'{'}
+                    <span className="ml-4">{'const'}</span> portfolio{' '}
+                    <span className="text-accent">=</span> {'{'}
                   </div>
                   <div className="text-muted-foreground ml-4">
                     <span className="text-accent">2</span>
-                    <span className="ml-4 text-foreground">skills: {`['React', 'Next.js', 'TypeScript']`}</span>
+                    <span className="ml-4 text-foreground">
+                      skills: {`['React', 'Next.js', 'TypeScript']`}
+                    </span>
                   </div>
                   <div className="text-muted-foreground ml-4">
                     <span className="text-accent">3</span>
-                    <span className="ml-4 text-foreground">projects: <span className="text-accent">5+</span></span>
+                    <span className="ml-4 text-foreground">
+                      projects: <span className="text-accent">5+</span>
+                    </span>
                   </div>
                   <div className="text-muted-foreground ml-4">
                     <span className="text-accent">4</span>
-                    <span className="ml-4 text-foreground">passion: <span className="text-secondary">'endless'</span></span>
+                    <span className="ml-4 text-foreground">
+                      passion: <span className="text-secondary">'endless'</span>
+                    </span>
                   </div>
                   <div className="text-accent">
                     <span className="text-muted-foreground">5</span>
