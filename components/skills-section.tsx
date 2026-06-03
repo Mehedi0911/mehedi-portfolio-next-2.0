@@ -45,7 +45,8 @@ export function SkillsSection() {
             Technical Expertise
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A comprehensive toolkit of modern technologies and practices for building exceptional digital products
+            A comprehensive toolkit of modern technologies and practices for building exceptional
+            digital products
           </p>
         </div>
 
@@ -60,7 +61,9 @@ export function SkillsSection() {
               >
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg bg-card border border-border group-hover:border-accent transition-colors ${category.color}`}>
+                    <div
+                      className={`p-2 rounded-lg bg-card border border-border group-hover:border-accent transition-colors ${category.color}`}
+                    >
                       <IconComponent size={20} />
                     </div>
                     <CardTitle className="text-xl">{category.name}</CardTitle>

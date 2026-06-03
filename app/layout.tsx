@@ -8,9 +8,9 @@ const _geist = Geist({ subsets: ['latin'] });
 const _geistMono = Geist_Mono({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Developer Portfolio | Code Playground',
+  title: 'Mehedi Mosharrof | Mobile App Developer',
   description:
-    'Full-stack developer portfolio with passion for creating elegant digital experiences',
+    'Mobile App Developer (L3) specializing in React Native, TypeScript, Next.js, and full-stack engineering. Production apps on Google Play and Apple App Store.',
   generator: 'v0.app',
   icons: {
     icon: [

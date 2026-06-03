@@ -9,11 +9,7 @@ interface ScrollRevealProps {
   direction?: 'up' | 'down' | 'left' | 'right';
 }
 
-export function ScrollReveal({
-  children,
-  delay = 0,
-  direction = 'up',
-}: ScrollRevealProps) {
+export function ScrollReveal({ children, delay = 0, direction = 'up' }: ScrollRevealProps) {
   const getInitialPosition = () => {
     switch (direction) {
       case 'up':

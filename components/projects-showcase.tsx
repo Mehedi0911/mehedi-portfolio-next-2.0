@@ -1,19 +1,20 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, ExternalLink, Code2, Zap } from 'lucide-react';
+import { Github, ExternalLink, Code2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { SectionHeading } from '@/components/section-heading';
 
 const projects = [
   {
     id: 1,
-    title: 'AI Learning Platform',
+    title: 'Martzlab Ecommerce CMS',
     description:
-      'Full-stack SaaS platform for AI-powered language learning with real-time progress tracking and personalized curriculum.',
+      'Full ecommerce platform with storefront and admin dashboard. Built product, inventory, category, and CMS modules with advanced search, filtering, and analytics dashboards on a scalable frontend architecture.',
     image: 'bg-gradient-to-br from-primary/20 to-secondary/20',
-    tech: ['Next.js', 'TypeScript', 'OpenAI', 'Stripe', 'Supabase'],
-    impact: '50K+ active users',
-    role: 'Founder & Lead Engineer',
+    tech: ['Next.js', 'TypeScript', 'MongoDB', 'Firebase', 'MUI', 'React Hook Form'],
+    impact: 'Storefront + Admin CMS',
+    role: 'Full Stack Developer',
     links: [
       { icon: Github, href: '#' },
       { icon: ExternalLink, href: '#' },
@@ -21,13 +22,13 @@ const projects = [
   },
   {
     id: 2,
-    title: 'Mobile Commerce App',
+    title: 'Hello Doorstep',
     description:
-      'Cross-platform e-commerce mobile app with offline-first architecture, real-time inventory sync, and native performance.',
+      'Property-focused garbage collection app connecting residents, property managers, and pickup workflows. Built scheduling, service requests, and status tracking for reliable on-demand waste management.',
     image: 'bg-gradient-to-br from-accent/20 to-primary/20',
-    tech: ['React Native', 'Expo', 'Firebase', 'Redux', 'Node.js'],
-    impact: '$5M revenue',
-    role: 'Mobile Lead',
+    tech: ['React Native', 'TypeScript', 'Expo', 'REST APIs', 'Firebase'],
+    impact: 'Property + Pickup Ops',
+    role: 'Mobile App Developer',
     links: [
       { icon: Github, href: '#' },
       { icon: ExternalLink, href: '#' },
@@ -35,61 +36,25 @@ const projects = [
   },
   {
     id: 3,
-    title: 'Developer Dashboard',
+    title: 'University Management System',
     description:
-      'Real-time analytics dashboard for API monitoring, metrics visualization, and performance optimization insights.',
-    image: 'bg-gradient-to-br from-primary/20 to-accent/20',
-    tech: ['React', 'GraphQL', 'PostgreSQL', 'Golang', 'WebSocket'],
-    impact: '10K+ developers',
-    role: 'Full Stack Engineer',
-    links: [
-      { icon: Github, href: '#' },
-      { icon: ExternalLink, href: '#' },
-    ],
-  },
-  {
-    id: 4,
-    title: 'Infrastructure Automation',
-    description:
-      'DevOps platform for automated deployment, scaling, and monitoring with multi-cloud support and disaster recovery.',
+      'Multi-role university platform with dedicated dashboards for admins, faculty, and students. Implemented role-based access, academic records, enrollment flows, and centralized administration tools.',
     image: 'bg-gradient-to-br from-secondary/20 to-accent/20',
-    tech: ['Docker', 'Kubernetes', 'Go', 'AWS', 'Terraform'],
-    impact: '99.99% uptime',
-    role: 'Infrastructure Engineer',
-    links: [
-      { icon: Github, href: '#' },
-      { icon: ExternalLink, href: '#' },
-    ],
-  },
-  {
-    id: 5,
-    title: 'Content AI Assistant',
-    description:
-      'Intelligent content generation tool with multi-modal support, style transfer, and real-time collaboration features.',
-    image: 'bg-gradient-to-br from-secondary/20 to-primary/20',
-    tech: ['Next.js', 'OpenAI', 'Vercel AI', 'Prisma', 'Redis'],
-    impact: '100K+ generations',
-    role: 'AI Product Engineer',
-    links: [
-      { icon: Github, href: '#' },
-      { icon: ExternalLink, href: '#' },
-    ],
-  },
-  {
-    id: 6,
-    title: 'Real-time Communication',
-    description:
-      'Enterprise messaging platform with E2E encryption, file sharing, and video conferencing built with WebRTC.',
-    image: 'bg-gradient-to-br from-primary/20 to-secondary/20',
-    tech: ['Socket.io', 'WebRTC', 'Node.js', 'MongoDB', 'React'],
-    impact: '1M+ messages/day',
-    role: 'Backend Engineer',
+    tech: ['Next.js', 'TypeScript', 'NestJS', 'PostgreSQL', 'Prisma'],
+    impact: 'Admin · Faculty · Student',
+    role: 'Full Stack Developer',
     links: [
       { icon: Github, href: '#' },
       { icon: ExternalLink, href: '#' },
     ],
   },
 ];
+
+const toProjectSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
 
 export function ProjectsShowcase() {
   const containerVariants = {
@@ -128,10 +93,10 @@ export function ProjectsShowcase() {
             <Code2 size={16} className="text-accent" />
             <span className="text-sm command-text text-accent">$ ls -la projects/</span>
           </div>
-          <h2 className="text-5xl font-bold text-foreground mb-4">Elite Project Showcase</h2>
+          <SectionHeading index="02">Featured Projects</SectionHeading>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Selected projects representing my expertise in full-stack development, scalable
-            architecture, and product engineering.
+            Production applications spanning ecommerce, property services, education platforms, and
+            scalable web systems.
           </p>
         </motion.div>
 
@@ -179,25 +144,48 @@ export function ProjectsShowcase() {
 
                 {/* Content */}
                 <div className="p-6 flex-1 flex flex-col">
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                    {project.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-sm text-muted-foreground mb-4 flex-1 leading-relaxed">
-                    {project.description}
-                  </p>
+                  {/* Title & description */}
+                  <div className="mb-4 flex-1 space-y-3">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-primary/65 command-text">
+                      // project.manifest
+                    </p>
+                    <div className="space-y-1">
+                      <p className="text-[11px] command-text">
+                        <span className="text-accent">import</span>{' '}
+                        <span className="text-primary">Project</span>
+                        <span className="text-foreground/45"> from </span>
+                        <span className="text-foreground/75">
+                          &apos;./{toProjectSlug(project.title)}&apos;
+                        </span>
+                      </p>
+                      <h3 className="font-mono text-lg font-bold leading-snug text-foreground transition-colors group-hover:text-primary">
+                        {project.title}
+                      </h3>
+                    </div>
+                    <div className="rounded-md border border-primary/15 bg-black/30 px-3 py-2.5">
+                      <p className="mb-1.5 text-[10px] text-accent/80 command-text">/**</p>
+                      <p className="font-mono text-sm leading-relaxed text-foreground/88">
+                        {project.description}
+                      </p>
+                      <p className="mt-1.5 text-right text-[10px] text-accent/80 command-text">
+                        */
+                      </p>
+                    </div>
+                  </div>
 
                   {/* Impact & Role */}
-                  <div className="space-y-2 mb-4 pb-4 border-t border-white/5">
-                    <div className="flex items-center justify-between text-xs pt-3">
-                      <span className="text-muted-foreground command-text">Impact:</span>
-                      <span className="text-primary font-semibold">{project.impact}</span>
+                  <div className="space-y-3 mb-4 pb-4 border-t border-white/5 pt-3">
+                    <div className="flex items-center justify-between gap-3 text-xs">
+                      <span className="shrink-0 text-muted-foreground command-text">Scope:</span>
+                      <span className="inline-flex max-w-[70%] items-center rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-right text-[11px] font-medium text-accent">
+                        {project.impact}
+                      </span>
                     </div>
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-muted-foreground command-text">Role:</span>
-                      <span className="text-secondary">{project.role}</span>
+                    <div className="flex items-center justify-between gap-3 text-xs">
+                      <span className="shrink-0 text-muted-foreground command-text">Role:</span>
+                      <span className="inline-flex max-w-[70%] items-center rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-right text-[11px] font-medium text-primary command-text">
+                        {project.role}
+                      </span>
                     </div>
                   </div>
 

@@ -10,6 +10,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Badge } from '@/components/ui/badge';
+import { SectionHeading } from '@/components/section-heading';
 
 const blogs = [
   {
@@ -84,7 +85,9 @@ export function BlogsSection() {
             <Binary size={16} className="text-primary" />
             <span className="command-text text-primary">$ ls content/blogs/</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Technical Blogs</h2>
+          <SectionHeading index="04" className="mb-3">
+            Technical Blogs
+          </SectionHeading>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Engineering notes on architecture, product development, and high-impact frontend
             systems.
@@ -96,56 +99,58 @@ export function BlogsSection() {
           className="w-full px-2 sm:px-12"
           aria-label="Blog posts carousel"
         >
-          <CarouselContent>
+          <CarouselContent className="items-stretch">
             {blogs.map((blog) => (
-              <CarouselItem key={blog.id} className="md:basis-1/2 xl:basis-1/3">
+              <CarouselItem key={blog.id} className="flex md:basis-1/2 xl:basis-1/3">
                 <motion.article
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45 }}
-                  className="group h-full rounded-2xl border border-primary/20 bg-linear-to-br from-card via-card to-primary/5 p-5 glass glow-primary"
+                  className="group flex h-full w-full flex-col rounded-2xl border border-primary/20 bg-linear-to-br from-card via-card to-primary/5 px-5 py-8 glass glow-primary"
                 >
-                  <div className="terminal-header rounded-t-lg -mx-5 -mt-5 mb-5">
-                    <span className="terminal-dot bg-card-foreground/20 shadow-sm shadow-card-foreground/25" />
-                    <span className="terminal-dot bg-card-foreground/20 shadow-sm shadow-card-foreground/25" />
-                    <span className="terminal-dot bg-card-foreground/20 shadow-sm shadow-card-foreground/25" />
-                    <span className="ml-2 text-xs command-text text-muted-foreground">
-                      ~/blog/{blog.id.toString().padStart(2, '0')}.md
-                    </span>
+                  <div className="flex flex-1 flex-col">
+                    <div className="terminal-header rounded-t-lg -mx-5 -mt-8 mb-6">
+                      <span className="terminal-dot bg-card-foreground/20 shadow-sm shadow-card-foreground/25" />
+                      <span className="terminal-dot bg-card-foreground/20 shadow-sm shadow-card-foreground/25" />
+                      <span className="terminal-dot bg-card-foreground/20 shadow-sm shadow-card-foreground/25" />
+                      <span className="ml-2 text-xs command-text text-muted-foreground">
+                        ~/blog/{blog.id.toString().padStart(2, '0')}.md
+                      </span>
+                    </div>
+
+                    <div className="mb-4 flex items-center justify-between text-xs text-muted-foreground command-text">
+                      <span className="inline-flex items-center gap-1.5">
+                        <Calendar size={13} />
+                        {blog.date}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-primary">
+                        <Clock3 size={13} />
+                        {blog.readTime}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-semibold leading-tight mb-3 group-hover:text-primary transition-colors">
+                      {blog.title}
+                    </h3>
+
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+                      {blog.excerpt}
+                    </p>
+
+                    <div className="mb-5 flex flex-wrap gap-2">
+                      {blog.tags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          className="border border-primary/30 bg-background/55 text-muted-foreground backdrop-blur-xs transition-all duration-200 hover:border-primary/45 hover:bg-primary/10 hover:text-primary"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="mb-4 flex items-center justify-between text-xs text-muted-foreground command-text">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Calendar size={13} />
-                      {blog.date}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-primary">
-                      <Clock3 size={13} />
-                      {blog.readTime}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-semibold leading-tight mb-3 group-hover:text-primary transition-colors">
-                    {blog.title}
-                  </h3>
-
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                    {blog.excerpt}
-                  </p>
-
-                  <div className="mb-5 flex flex-wrap gap-2">
-                    {blog.tags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        className="border border-primary/30 bg-background/55 text-muted-foreground backdrop-blur-xs transition-all duration-200 hover:border-primary/45 hover:bg-primary/10 hover:text-primary"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  <div className="mt-auto space-y-3">
+                  <div className="mt-auto space-y-3 pt-2">
                     <div className="rounded-md border border-primary/35 bg-primary/10 px-3 py-2 text-xs command-text text-primary">
                       <span className="text-muted-foreground">$</span> {blog.command}
                     </div>

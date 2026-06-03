@@ -136,6 +136,28 @@
     @apply font-mono text-sm tracking-wider;
   }
 
+  .section-heading {
+    @apply flex flex-wrap items-center justify-center gap-x-2 gap-y-1;
+  }
+
+  .section-heading-index {
+    @apply font-mono text-xs tracking-[0.25em] text-primary/70 sm:text-sm;
+  }
+
+  .section-heading-bracket {
+    @apply font-mono text-2xl font-normal text-primary/45 sm:text-3xl;
+  }
+
+  .section-heading-text {
+    @apply font-mono text-3xl font-bold uppercase tracking-[0.1em] sm:text-4xl lg:text-5xl;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .section-heading-rule {
+    @apply mx-auto mt-3 h-px w-28 max-w-full bg-gradient-to-r from-transparent via-primary/55 to-transparent;
+  }
+
   .terminal-line {
     @apply border-l-2 border-accent pl-3 py-2;
   }

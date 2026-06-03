@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Mail, Github, Linkedin, Twitter, ExternalLink } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { SOCIAL_LINKS } from '@/lib/social-links';
 
 export function ContactSection() {
   const [formState, setFormState] = useState({
@@ -27,8 +28,8 @@ export function ContactSection() {
   };
 
   const socialLinks = [
-    { icon: Github, label: 'GitHub', href: '#' },
-    { icon: Linkedin, label: 'LinkedIn', href: '#' },
+    { icon: Github, label: 'GitHub', href: SOCIAL_LINKS.github },
+    { icon: Linkedin, label: 'LinkedIn', href: SOCIAL_LINKS.linkedin },
     { icon: Twitter, label: 'Twitter', href: '#' },
     { icon: Mail, label: 'Email', href: 'mailto:hello@example.com' },
   ];
@@ -43,9 +44,7 @@ export function ContactSection() {
             <span className="command-text text-sm uppercase">contact</span>
             <span className="code-bracket">{`>`}</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            Let&apos;s Connect
-          </h2>
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Let&apos;s Connect</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? I&apos;d love to hear from you
           </p>
@@ -121,9 +120,7 @@ export function ContactSection() {
                   <div className="text-accent">
                     <span className="text-muted-foreground">&gt;</span> await sendEmail()
                   </div>
-                  <div className="text-primary text-xs ml-2">
-                    ✓ Connection established
-                  </div>
+                  <div className="text-primary text-xs ml-2">✓ Connection established</div>
                 </div>
               </div>
             </div>
@@ -137,10 +134,16 @@ export function ContactSection() {
                 <h3 className="text-xl font-bold mb-4">Direct Contact</h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 group cursor-pointer">
-                    <Mail size={20} className="text-accent group-hover:text-secondary transition-colors" />
+                    <Mail
+                      size={20}
+                      className="text-accent group-hover:text-secondary transition-colors"
+                    />
                     <div>
                       <div className="text-xs command-text text-muted-foreground">Email</div>
-                      <a href="mailto:hello@example.com" className="text-foreground hover:text-accent transition-colors">
+                      <a
+                        href="mailto:hello@example.com"
+                        className="text-foreground hover:text-accent transition-colors"
+                      >
                         hello@example.com
                       </a>
                     </div>
@@ -164,10 +167,18 @@ export function ContactSection() {
                       className="flex items-center gap-2 px-4 py-3 bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/40 rounded hover:border-primary hover:bg-gradient-to-br hover:from-primary/30 hover:to-primary/20 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group relative overflow-hidden"
                     >
                       <span className="relative z-10">
-                        <IconComponent size={18} className="text-primary group-hover:text-white transition-colors duration-300" />
+                        <IconComponent
+                          size={18}
+                          className="text-primary group-hover:text-white transition-colors duration-300"
+                        />
                       </span>
-                      <span className="text-sm command-text text-foreground relative z-10">{link.label}</span>
-                      <ExternalLink size={14} className="text-muted-foreground group-hover:text-white transition-colors duration-300 ml-auto opacity-0 group-hover:opacity-100 relative z-10" />
+                      <span className="text-sm command-text text-foreground relative z-10">
+                        {link.label}
+                      </span>
+                      <ExternalLink
+                        size={14}
+                        className="text-muted-foreground group-hover:text-white transition-colors duration-300 ml-auto opacity-0 group-hover:opacity-100 relative z-10"
+                      />
                     </a>
                   );
                 })}
@@ -179,15 +190,9 @@ export function ContactSection() {
               <div className="text-muted-foreground">
                 <span className="text-accent">$</span> status
               </div>
-              <div className="text-primary ml-2">
-                ✓ Ready to collaborate
-              </div>
-              <div className="text-primary ml-2">
-                ✓ Open to opportunities
-              </div>
-              <div className="text-primary ml-2">
-                ✓ Available for freelance
-              </div>
+              <div className="text-primary ml-2">✓ Ready to collaborate</div>
+              <div className="text-primary ml-2">✓ Open to opportunities</div>
+              <div className="text-primary ml-2">✓ Available for freelance</div>
             </div>
           </div>
         </div>

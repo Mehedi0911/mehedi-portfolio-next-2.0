@@ -1,11 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Twitter, Send, Terminal } from 'lucide-react';
+import { Github, Linkedin, Mail, Phone, Send, Terminal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
+import { SectionHeading } from '@/components/section-heading';
+import { SOCIAL_LINKS } from '@/lib/social-links';
 
 export function ContactTerminal() {
   const [formData, setFormData] = useState({
@@ -32,10 +34,10 @@ export function ContactTerminal() {
   };
 
   const socialLinks = [
-    { icon: Github, label: 'GitHub', href: '#' },
-    { icon: Linkedin, label: 'LinkedIn', href: '#' },
-    { icon: Twitter, label: 'Twitter', href: '#' },
-    { icon: Mail, label: 'Email', href: 'mailto:hello@example.com' },
+    { icon: Github, label: 'GitHub', href: SOCIAL_LINKS.github },
+    { icon: Linkedin, label: 'LinkedIn', href: SOCIAL_LINKS.linkedin },
+    { icon: Mail, label: 'Email', href: 'mailto:mehedi.mosh@gmail.com' },
+    { icon: Phone, label: 'Phone', href: 'tel:+8801846249631' },
   ];
 
   return (
@@ -53,7 +55,7 @@ export function ContactTerminal() {
             <Terminal size={16} className="text-accent" />
             <span className="text-sm command-text text-accent">$ send-message --to="me"</span>
           </div>
-          <h2 className="text-5xl font-bold text-foreground mb-4">Let&apos;s Build Together</h2>
+          <SectionHeading index="05">Let&apos;s Build Together</SectionHeading>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Have an idea? Want to collaborate? Let&apos;s connect and create something amazing.
           </p>
@@ -228,23 +230,95 @@ export function ContactTerminal() {
               </div>
             </div>
 
-            {/* Quick Stats */}
-            <div className="glass rounded-xl p-8 glow-primary">
-              <h3 className="text-lg font-semibold text-foreground mb-6">Response Time</h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Email Response</span>
-                  <span className="text-sm font-semibold text-accent command-text">24 hours</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Project Inquiry</span>
-                  <span className="text-sm font-semibold text-primary command-text">2-3 days</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Collaboration</span>
-                  <span className="text-sm font-semibold text-secondary command-text">
-                    Always open
+            {/* Background profile */}
+            <div className="glass overflow-hidden rounded-xl glow-primary">
+              <div className="border-b border-border/40 bg-black/35 px-4 py-3">
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-50" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_hsl(var(--primary)/0.8)]" />
+                    </span>
+                    <span className="text-[10px] uppercase tracking-[0.22em] text-primary command-text">
+                      profile.online
+                    </span>
+                  </div>
+                  <span className="rounded border border-accent/30 bg-accent/10 px-1.5 py-0.5 text-[10px] command-text text-accent">
+                    v2.1
                   </span>
+                </div>
+                <p className="truncate text-[11px] command-text text-muted-foreground">
+                  <span className="code-bracket">{'<'}</span>
+                  ~/profile/background.json
+                  <span className="code-bracket">{'/>'}</span>
+                </p>
+                <div
+                  className="mt-2.5 h-0.5 overflow-hidden rounded-full bg-border/50"
+                  role="presentation"
+                  aria-hidden
+                >
+                  <div className="h-full w-full bg-gradient-to-r from-primary/30 via-primary to-accent" />
+                </div>
+                <p className="mt-1.5 text-right text-[10px] text-primary/45 command-text">
+                  load_complete · 100%
+                </p>
+              </div>
+
+              <div className="space-y-4 p-6">
+                <p className="text-xs command-text text-primary">
+                  <span className="text-muted-foreground">$</span> cat profile.json
+                </p>
+
+                <div className="terminal-line rounded-r-md border-primary/40 bg-primary/5 py-3 pr-3">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-primary/60 command-text">
+                    education::degree
+                  </p>
+                  <p className="mt-1.5 text-sm text-foreground">
+                    Bachelor of Business Administration (Marketing)
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground command-text">
+                    {`period: "2011 – 2016"`}
+                  </p>
+                </div>
+
+                <div className="terminal-line rounded-r-md border-accent/40 bg-accent/5 py-3 pr-3">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-accent/70 command-text">
+                    languages::stack
+                  </p>
+                  <p className="mt-1.5 text-sm text-muted-foreground command-text">
+                    <span className="text-foreground">Bangla</span>
+                    <span className="text-primary/80"> (native)</span>
+                    <span className="text-muted-foreground/60"> · </span>
+                    <span className="text-foreground">English</span>
+                    <span className="text-primary/80"> (professional)</span>
+                  </p>
+                </div>
+
+                <div className="rounded-lg border border-border/50 bg-background/40 p-4 space-y-2.5">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground command-text">
+                    contact::channels
+                  </p>
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs command-text">
+                    <span className="text-muted-foreground">email:</span>
+                    <a
+                      href="mailto:mehedi.mosh@gmail.com"
+                      className="font-semibold text-accent transition-colors hover:text-accent/80"
+                    >
+                      mehedi.mosh@gmail.com
+                    </a>
+                  </div>
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs command-text">
+                    <span className="text-muted-foreground">phone:</span>
+                    <a
+                      href="tel:+8801846249631"
+                      className="font-semibold text-primary transition-colors hover:text-primary/80"
+                    >
+                      01846249631
+                    </a>
+                  </div>
+                  <p className="pt-1 text-[10px] text-primary/50 command-text">
+                    {'>'} status: channels_active
+                  </p>
                 </div>
               </div>
             </div>

@@ -2,43 +2,79 @@
 
 import { motion } from 'framer-motion';
 import { Code2, GitBranch } from 'lucide-react';
+import Image from 'next/image';
+import { SectionHeading } from '@/components/section-heading';
+
+const noiseDotLayers = [
+  {
+    color: 'rgba(139, 92, 246, 0.34)',
+    size: '20px 20px',
+    position: '0 0',
+    duration: 2.4,
+    delay: 0,
+  },
+  {
+    color: 'rgba(59, 130, 246, 0.3)',
+    size: '30px 30px',
+    position: '10px 10px',
+    duration: 3.2,
+    delay: 0.6,
+  },
+  {
+    color: 'rgba(236, 72, 153, 0.27)',
+    size: '25px 25px',
+    position: '15px 5px',
+    duration: 2.8,
+    delay: 1.2,
+  },
+];
 
 const experiences = [
   {
     id: 1,
-    role: 'Senior Full Stack Engineer',
-    company: 'Tech Startup',
-    duration: '2023 - Present',
+    role: 'Mobile App Developer L3',
+    company: 'ShareViral',
+    logo: '/shareviral.png',
+    duration: 'May 2026 – Present',
     achievements: [
-      'Led migration of monolith to microservices architecture',
-      'Increased platform performance by 60% through optimization',
-      'Built AI-powered features serving 100K+ users',
+      'Developed and maintained production React Native apps (Android & iOS) with 99%+ crash-free sessions',
+      'Built reusable TypeScript component system, reducing feature development time by ~30%',
+      'Integrated multiple backend services and third-party APIs, reducing API failure handling issues by ~25%',
+      'Collaborated with product and backend teams in agile sprint cycles (1–2 weeks delivery cadence)',
+      'Improved app performance through rendering optimization, reducing screen load time by ~20–35% in key modules',
     ],
-    tech: ['React', 'Node.js', 'PostgreSQL', 'Docker', 'OpenAI'],
+    tech: ['React Native', 'TypeScript', 'iOS', 'Android', 'REST APIs', 'Supabase', 'PostgreSQL'],
   },
   {
     id: 2,
-    role: 'Full Stack Engineer',
-    company: 'Digital Agency',
-    duration: '2021 - 2023',
+    role: 'Software Engineer',
+    company: 'Codinism',
+    logo: '/codinism.avif',
+    duration: 'Dec 2022 – April 2026',
     achievements: [
-      'Developed 15+ client projects from concept to production',
-      'Implemented real-time features using WebSocket',
-      'Mentored 3 junior developers',
+      'Built and maintained production-grade mobile and web apps using React Native, React, Next.js, and TypeScript',
+      'Contributed to education-platform-scale apps with consistent feature releases and maintenance cycles',
+      'Reduced UI lag and unnecessary re-renders using Redux Toolkit + Zustand optimization patterns',
+      'Designed scalable API integration layers, reducing redundant network calls by ~25–40%',
+      'Delivered full release pipelines to Google Play Store and Apple App Store',
+      'Worked cross-functionally (design, backend, QA) with weekly/monthly release cadence',
     ],
-    tech: ['Next.js', 'GraphQL', 'Firebase', 'React Native'],
+    tech: ['React Native', 'Next.js', 'TypeScript', 'Redux Toolkit', 'Zustand'],
   },
   {
     id: 3,
     role: 'Frontend Developer',
-    company: 'E-commerce Platform',
-    duration: '2020 - 2021',
+    company: 'Ajax Business Solutions',
+    logo: '/ajax.png',
+    duration: 'Aug 2021 – Sep 2022',
     achievements: [
-      'Built responsive interfaces for 50K+ daily users',
-      'Improved Core Web Vitals by 45%',
-      'Led design system implementation',
+      'Developed enterprise-grade React dashboards for internal business operations',
+      'Built reusable UI component system, reducing development duplication by ~30%',
+      'Implemented advanced table systems (search, filter, sort, pagination) for large datasets',
+      'Improved frontend performance through code-splitting and memoization, reducing page load time by ~20%',
+      'Integrated REST APIs with structured error handling, reducing frontend API-related production issues',
     ],
-    tech: ['React', 'TypeScript', 'Tailwind', 'Redux'],
+    tech: ['React', 'TypeScript', 'REST APIs', 'Redux'],
   },
 ];
 
@@ -46,19 +82,25 @@ export function ExperienceTimeline() {
   return (
     <section id="experience" className="py-20 px-4 relative bg-black overflow-hidden">
       {/* Dark Noise Colored Background */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background: '#000000',
-          backgroundImage: `
-            radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.2) 1px, transparent 0),
-            radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.18) 1px, transparent 0),
-            radial-gradient(circle at 1px 1px, rgba(236, 72, 153, 0.15) 1px, transparent 0)
-          `,
-          backgroundSize: '20px 20px, 30px 30px, 25px 25px',
-          backgroundPosition: '0 0, 10px 10px, 15px 5px',
-        }}
-      />
+      <div className="absolute inset-0 z-0 bg-black" />
+      {noiseDotLayers.map((layer) => (
+        <motion.div
+          key={layer.position}
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, ${layer.color} 1px, transparent 0)`,
+            backgroundSize: layer.size,
+            backgroundPosition: layer.position,
+          }}
+          animate={{ opacity: [0.45, 1, 0.5] }}
+          transition={{
+            duration: layer.duration,
+            delay: layer.delay,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      ))}
       <div className="absolute inset-0 z-0 bg-black/30" />
 
       <div className="container mx-auto max-w-4xl relative z-10">
@@ -74,9 +116,10 @@ export function ExperienceTimeline() {
             <GitBranch size={16} className="text-accent" />
             <span className="text-sm command-text text-accent">$ git log --oneline</span>
           </div>
-          <h2 className="text-5xl font-bold text-foreground mb-4">Professional Journey</h2>
+          <SectionHeading index="03">Professional Journey</SectionHeading>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            A timeline of my career growth, technical achievements, and impactful projects.
+            Cross-platform mobile and full-stack engineering roles across product, education, and
+            enterprise teams.
           </p>
         </motion.div>
 
@@ -115,10 +158,21 @@ export function ExperienceTimeline() {
 
                     {/* Main content */}
                     <div className="space-y-3">
-                      <div>
-                        <h3 className="text-xl font-bold text-foreground">{exp.role}</h3>
-                        <p className="text-primary command-text text-sm">{exp.company}</p>
-                        <p className="text-muted-foreground text-xs mt-1">{exp.duration}</p>
+                      <div className="flex items-start gap-3">
+                        <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-border/40 bg-background/60 p-1.5">
+                          <Image
+                            src={exp.logo}
+                            alt={`${exp.company} logo`}
+                            fill
+                            sizes="44px"
+                            className="object-contain"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="text-xl font-bold text-foreground">{exp.role}</h3>
+                          <p className="text-primary command-text text-sm">{exp.company}</p>
+                          <p className="text-muted-foreground text-xs mt-1">{exp.duration}</p>
+                        </div>
                       </div>
 
                       {/* Achievements */}

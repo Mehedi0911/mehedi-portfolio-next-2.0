@@ -1,15 +1,16 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Code2, Github, ExternalLink, ArrowDown, Download } from 'lucide-react';
+import { Code2, Github, Linkedin, ExternalLink, ArrowDown, Download } from 'lucide-react';
+import { SOCIAL_LINKS } from '@/lib/social-links';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect, useRef, useMemo } from 'react';
 
 const typingTexts = [
-  'Building SaaS',
-  'Crafting Mobile Apps',
-  'Designing Developer Systems',
-  'Shipping AI Products',
+  'Building React Native Apps',
+  'Shipping to App Store & Play Store',
+  'Crafting Scalable Frontends',
+  'Integrating APIs & Backend Services',
 ];
 
 const navItems = [
@@ -45,7 +46,9 @@ export function HeroPremium() {
   });
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.45]);
+  const bottomBlur = useTransform(scrollYProgress, [0, 0.2, 0.55, 1], [0, 5, 14, 24]);
+  const bottomBlurFilter = useTransform(bottomBlur, (value) => `blur(${value}px)`);
+  const bottomScrimOpacity = useTransform(scrollYProgress, [0, 0.12, 0.45, 1], [0, 0.35, 0.7, 1]);
   const verticalPulseLines = useMemo(
     () =>
       Array.from({ length: 20 }, (_, i) => ({
@@ -180,8 +183,8 @@ export function HeroPremium() {
         ))}
       </div>
       <motion.div
-        className="container mx-auto px-4 relative z-10"
-        style={isMounted ? { y: contentY, opacity: contentOpacity } : { y: 0, opacity: 1 }}
+        className="container mx-auto px-4 relative z-10 will-change-transform"
+        style={isMounted ? { y: contentY } : { y: 0 }}
       >
         <motion.nav
           initial={{ opacity: 0, y: -16 }}
@@ -211,100 +214,130 @@ export function HeroPremium() {
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
-            {/* Terminal label */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-sm command-text text-primary">
-              <Code2 size={14} />$ whoami
-            </div>
+            <div className="space-y-8">
+              {/* Terminal label */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-sm command-text text-primary">
+                <Code2 size={14} />$ whoami
+              </div>
 
-            {/* Main heading */}
-            <div className="space-y-4">
-              <h1 className="text-5xl lg:text-7xl font-bold text-foreground leading-tight">
-                Mehedi Mosharrof
-                <br />
-                <span className="bg-linear-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-                  Software Engineer
-                </span>
-              </h1>
-
-              <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-                Full Stack Engineer specializing in React, React Native, Next.js, TypeScript,
-                Golang, AI-powered apps, and scalable product engineering.
-              </p>
-            </div>
-
-            {/* Typing animation */}
-            <div className="flex items-center gap-2 text-xl command-text">
-              <span className="text-accent">{'>'}</span>
-              <span className="text-foreground">{displayText}</span>
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ duration: 0.7, repeat: Infinity }}
-                className="text-accent"
-              >
-                |
-              </motion.span>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-8">
-              <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  size="lg"
-                  className="btn-primary gap-2 group relative shadow-xl shadow-primary/30 w-full sm:w-auto"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    View Projects
-                    <ExternalLink
-                      size={18}
-                      className="group-hover:translate-x-2 transition-transform duration-300"
-                    />
+              {/* Main heading */}
+              <div className="space-y-4">
+                <h1 className="space-y-2 leading-tight">
+                  <span className="block text-5xl font-bold tracking-tight text-foreground lg:text-7xl">
+                    Mehedi Mosharrof
                   </span>
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  className="border-2 border-primary bg-transparent text-primary hover:bg-transparent hover:text-primary gap-2 group relative shadow-lg shadow-primary/20 w-full sm:w-auto"
+                  <span className="block font-mono text-2xl font-semibold uppercase tracking-[0.12em] text-primary sm:text-3xl lg:text-4xl">
+                    <span className="bg-linear-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+                      Software Engineer
+                    </span>
+                  </span>
+                </h1>
+
+                <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+                  Mobile App Developer with 4+ years of experience building production-grade mobile
+                  and web applications using React Native, TypeScript, React, and Next.js. Strong
+                  focus on scalable frontend architecture, performance optimization, and
+                  product-driven development — expanding backend expertise with Golang, PostgreSQL,
+                  and scalable API systems.
+                </p>
+              </div>
+
+              {/* Typing animation */}
+              <div className="flex items-center gap-2 text-xl command-text">
+                <span className="text-accent">{'>'}</span>
+                <span className="text-foreground">{displayText}</span>
+                <motion.span
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ duration: 0.7, repeat: Infinity }}
+                  className="text-accent"
                 >
-                  <span className="relative z-10 flex items-center gap-2">
+                  |
+                </motion.span>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col gap-4 pt-8">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+                    <Button
+                      size="lg"
+                      className="btn-primary gap-2 group relative shadow-xl shadow-primary/30 w-full sm:w-auto"
+                      onClick={() => scrollToSection('projects')}
+                    >
+                      <span className="relative z-10 flex items-center gap-2">
+                        View Projects
+                        <ExternalLink
+                          size={18}
+                          className="group-hover:translate-x-2 transition-transform duration-300"
+                        />
+                      </span>
+                    </Button>
+                  </motion.div>
+                  <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      className="border-2 border-primary bg-transparent text-primary hover:bg-transparent hover:text-primary gap-2 group relative shadow-lg shadow-primary/20 w-full sm:w-auto"
+                      onClick={() => scrollToSection('contact')}
+                    >
+                      <span className="relative z-10 flex items-center gap-2">Contact Me</span>
+                    </Button>
+                  </motion.div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-muted-foreground command-text">
+                    $ social --connect
+                  </span>
+                  <motion.a
+                    href={SOCIAL_LINKS.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub profile"
+                    whileHover={{ scale: 1.08, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-primary/35 bg-primary/10 text-primary transition-colors hover:border-primary/60 hover:bg-primary/20"
+                  >
                     <Github size={18} />
-                    Contact Me
-                  </span>
-                </Button>
-              </motion.div>
+                  </motion.a>
+                  <motion.a
+                    href={SOCIAL_LINKS.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn profile"
+                    whileHover={{ scale: 1.08, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-accent/35 bg-accent/10 text-accent transition-colors hover:border-accent/60 hover:bg-accent/20"
+                  >
+                    <Linkedin size={18} />
+                  </motion.a>
+                </div>
+              </div>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-border/40">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-center"
-              >
-                <div className="text-3xl font-bold text-primary">5+</div>
-                <div className="text-sm text-muted-foreground command-text">Years Experience</div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-center"
-              >
-                <div className="text-3xl font-bold text-accent">20+</div>
-                <div className="text-sm text-muted-foreground command-text">Projects Built</div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-center"
-              >
-                <div className="text-3xl font-bold text-secondary">100%</div>
-                <div className="text-sm text-muted-foreground command-text">Satisfaction</div>
-              </motion.div>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="relative z-20 pt-6"
+            >
+              <div className="glass rounded-xl border border-border/60 bg-card/50 backdrop-blur-md px-4 py-5 shadow-lg shadow-primary/5">
+                <div className="grid grid-cols-3 gap-4 divide-x divide-border/50">
+                  <div className="text-center px-2">
+                    <div className="text-3xl font-bold text-primary">4+</div>
+                    <div className="text-sm text-foreground/80 command-text mt-1">Years</div>
+                  </div>
+                  <div className="text-center px-2">
+                    <div className="text-3xl font-bold text-accent">15+</div>
+                    <div className="text-sm text-foreground/80 command-text mt-1">Projects</div>
+                  </div>
+                  <div className="text-center px-2">
+                    <div className="text-3xl font-bold text-secondary">10000+</div>
+                    <div className="text-sm text-foreground/80 command-text mt-1">Users</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Right Side - Code Editor UI */}
@@ -426,8 +459,29 @@ export function HeroPremium() {
         </motion.div>
       </motion.div>
 
+      {/* Bottom-only scroll blur + fade (top of hero stays sharp) */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-[min(52%,420px)]"
+        style={
+          isMounted
+            ? {
+                opacity: bottomScrimOpacity,
+                backdropFilter: bottomBlurFilter,
+                WebkitBackdropFilter: bottomBlurFilter,
+                maskImage:
+                  'linear-gradient(to top, black 30%, rgba(0,0,0,0.65) 55%, transparent 100%)',
+                WebkitMaskImage:
+                  'linear-gradient(to top, black 30%, rgba(0,0,0,0.65) 55%, transparent 100%)',
+                background:
+                  'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background) / 0.75) 28%, transparent 100%)',
+              }
+            : { opacity: 0, backdropFilter: 'blur(0px)', WebkitBackdropFilter: 'blur(0px)' }
+        }
+      />
+
       {/* Smooth transition into the next section */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-36 bg-gradient-to-b from-transparent via-background/80 to-background" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-28 bg-gradient-to-b from-transparent via-background/45 to-background" />
     </section>
   );
 }
