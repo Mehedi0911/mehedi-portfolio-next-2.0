@@ -80,7 +80,10 @@ const experiences = [
 
 export function ExperienceTimeline() {
   return (
-    <section id="experience" className="py-20 px-4 relative bg-black overflow-hidden">
+    <section
+      id="experience"
+      className="relative overflow-x-clip bg-black px-4 py-16 sm:px-6 sm:py-20"
+    >
       {/* Dark Noise Colored Background */}
       <div className="absolute inset-0 z-0 bg-black" />
       {noiseDotLayers.map((layer) => (
@@ -103,21 +106,21 @@ export function ExperienceTimeline() {
       ))}
       <div className="absolute inset-0 z-0 bg-black/30" />
 
-      <div className="container mx-auto max-w-4xl relative z-10">
+      <div className="relative z-10 mx-auto w-full max-w-4xl lg:max-w-6xl">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          className="mb-10 text-center sm:mb-14 lg:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent/30 bg-accent/5 mb-4">
-            <GitBranch size={16} className="text-accent" />
-            <span className="text-sm command-text text-accent">$ git log --oneline</span>
+          <div className="mb-3 inline-flex max-w-full items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-3 py-1.5 sm:mb-4 sm:px-4 sm:py-2">
+            <GitBranch size={14} className="shrink-0 text-accent sm:h-4 sm:w-4" />
+            <span className="text-xs command-text text-accent sm:text-sm">$ git log --oneline</span>
           </div>
           <SectionHeading index="03">Professional Journey</SectionHeading>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl px-1 text-sm text-muted-foreground sm:text-base">
             Cross-platform mobile and full-stack engineering roles across product, education, and
             enterprise teams.
           </p>
@@ -125,88 +128,26 @@ export function ExperienceTimeline() {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Connector line */}
           <motion.div
             initial={{ height: 0 }}
             whileInView={{ height: '100%' }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-primary via-accent to-secondary"
+            className="absolute bottom-0 top-0 left-4 w-px -translate-x-1/2 bg-gradient-to-b from-primary via-accent to-secondary sm:left-5 sm:w-0.5 lg:left-1/2 lg:w-1"
           />
 
-          {/* Timeline items */}
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-10 lg:space-y-14">
             {experiences.map((exp, idx) => (
               <motion.div
                 key={exp.id}
-                initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className={`flex items-start gap-8 ${idx % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.55, delay: idx * 0.08 }}
+                className={`relative pl-11 sm:pl-14 lg:flex lg:items-start lg:gap-10 lg:pl-0 ${
+                  idx % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                }`}
               >
-                {/* Content - Left/Right based on index */}
-                <div className="flex-1">
-                  <div className="glass rounded-xl p-6 glow-primary">
-                    {/* Terminal header simulation */}
-                    <div className="flex items-center gap-2 mb-4 pb-4 border-b border-border/40">
-                      <Code2 size={16} className="text-primary" />
-                      <div className="text-xs text-muted-foreground command-text">
-                        $ git commit -m "{exp.role}"
-                      </div>
-                    </div>
-
-                    {/* Main content */}
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-border/40 bg-background/60 p-1.5">
-                          <Image
-                            src={exp.logo}
-                            alt={`${exp.company} logo`}
-                            fill
-                            sizes="44px"
-                            className="object-contain"
-                          />
-                        </div>
-                        <div className="min-w-0">
-                          <h3 className="text-xl font-bold text-foreground">{exp.role}</h3>
-                          <p className="text-primary command-text text-sm">{exp.company}</p>
-                          <p className="text-muted-foreground text-xs mt-1">{exp.duration}</p>
-                        </div>
-                      </div>
-
-                      {/* Achievements */}
-                      <div className="space-y-2">
-                        <p className="text-xs text-muted-foreground command-text">achievements:</p>
-                        <ul className="space-y-2">
-                          {exp.achievements.map((achievement, i) => (
-                            <li
-                              key={i}
-                              className="text-sm text-muted-foreground flex items-start gap-2"
-                            >
-                              <span className="text-accent mt-0.5">›</span>
-                              <span>{achievement}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Tech stack */}
-                      <div className="flex flex-wrap gap-2 pt-4">
-                        {exp.tech.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 text-xs bg-primary/10 border border-primary/30 text-primary rounded command-text"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Center dot */}
                 <motion.div
                   animate={{
                     boxShadow: [
@@ -218,13 +159,76 @@ export function ExperienceTimeline() {
                     duration: 2,
                     repeat: Infinity,
                   }}
-                  className="w-6 h-6 rounded-full bg-primary border-2 border-background flex-shrink-0 relative z-10"
+                  className="absolute left-4 top-7 z-10 h-4 w-4 shrink-0 rounded-full border-2 border-background bg-primary sm:left-5 sm:top-8 sm:h-5 sm:w-5 lg:left-1/2 lg:top-9 lg:h-6 lg:w-6 lg:-translate-x-1/2"
                 >
-                  <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+                  <div className="absolute inset-0 animate-ping rounded-full bg-primary/30" />
                 </motion.div>
 
-                {/* Empty space */}
-                <div className="flex-1" />
+                <div className="min-w-0 w-full lg:flex-1">
+                  <div className="glass glow-primary rounded-xl p-4 sm:p-5 lg:p-6">
+                    <div className="mb-3 flex min-w-0 items-center gap-2 border-b border-border/40 pb-3 sm:mb-4 sm:pb-4">
+                      <Code2 size={14} className="shrink-0 text-primary sm:h-4 sm:w-4" />
+                      <p className="min-w-0 break-words text-[10px] text-muted-foreground command-text sm:text-xs">
+                        $ git commit -m &quot;{exp.role}&quot;
+                      </p>
+                    </div>
+
+                    <div className="space-y-3 sm:space-y-4">
+                      <div className="flex items-start gap-3">
+                        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-border/40 bg-background/60 p-1.5 sm:h-11 sm:w-11">
+                          <Image
+                            src={exp.logo}
+                            alt={`${exp.company} logo`}
+                            fill
+                            sizes="(max-width: 640px) 40px, 44px"
+                            className="object-contain"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-base font-bold leading-snug text-foreground sm:text-lg lg:text-xl">
+                            {exp.role}
+                          </h3>
+                          <p className="text-xs text-primary command-text sm:text-sm">
+                            {exp.company}
+                          </p>
+                          <p className="mt-1 text-[11px] text-muted-foreground sm:text-xs">
+                            {exp.duration}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <p className="text-[10px] text-muted-foreground command-text sm:text-xs">
+                          achievements:
+                        </p>
+                        <ul className="space-y-1.5 sm:space-y-2">
+                          {exp.achievements.map((achievement, i) => (
+                            <li
+                              key={i}
+                              className="flex items-start gap-2 text-xs text-muted-foreground sm:text-sm"
+                            >
+                              <span className="mt-0.5 shrink-0 text-accent">›</span>
+                              <span className="min-w-0 break-words">{achievement}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="flex flex-wrap gap-1.5 pt-2 sm:gap-2 sm:pt-4">
+                        {exp.tech.map((tech) => (
+                          <span
+                            key={tech}
+                            className="rounded border border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary command-text sm:px-2 sm:py-1 sm:text-xs"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hidden min-w-0 lg:block lg:flex-1" aria-hidden />
               </motion.div>
             ))}
           </div>

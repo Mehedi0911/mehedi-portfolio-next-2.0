@@ -117,7 +117,7 @@ export function HeroPremium() {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen flex items-center pt-20 overflow-hidden relative bg-background"
+      className="relative flex min-h-dvh items-start justify-center overflow-hidden bg-background pt-16 pb-24 sm:items-center sm:pt-20 sm:pb-28 lg:pb-20"
     >
       {/* Magenta Orb Grid Background */}
       <motion.div
@@ -153,7 +153,7 @@ export function HeroPremium() {
           y: isMounted ? backgroundY : 0,
           backgroundImage:
             'linear-gradient(to right, hsl(var(--muted-foreground) / 0.11) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--muted-foreground) / 0.11) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
+          backgroundSize: 'clamp(24px, 5vw, 40px) clamp(24px, 5vw, 40px)',
         }}
       />
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -183,22 +183,22 @@ export function HeroPremium() {
         ))}
       </div>
       <motion.div
-        className="container mx-auto px-4 relative z-10 will-change-transform"
+        className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 will-change-transform"
         style={isMounted ? { y: contentY } : { y: 0 }}
       >
         <motion.nav
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="absolute top-0 right-4 sm:right-6 lg:right-8 z-20"
+          className="z-20 mb-6 flex w-full justify-end sm:mb-8 lg:absolute lg:top-0 lg:right-6 lg:mb-0 xl:right-8"
         >
-          <div className="glass rounded-full px-2 py-2 flex items-center gap-1 border border-border/70">
+          <div className="glass flex max-w-full items-center gap-0.5 overflow-x-auto rounded-full border border-border/70 px-1.5 py-1.5 [-ms-overflow-style:none] [scrollbar-width:none] sm:gap-1 sm:px-2 sm:py-2 [&::-webkit-scrollbar]:hidden">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => scrollToSection(item.id)}
-                className="px-3 py-1.5 text-xs sm:text-sm command-text text-muted-foreground hover:text-foreground hover:bg-white/10 rounded-full transition-colors duration-200"
+                className="shrink-0 rounded-full px-2.5 py-1.5 text-[11px] command-text text-muted-foreground transition-colors duration-200 hover:bg-white/10 hover:text-foreground sm:px-3 sm:text-sm"
               >
                 {item.label}
               </button>
@@ -206,34 +206,34 @@ export function HeroPremium() {
           </div>
         </motion.nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           {/* Left Side - Terminal Intro */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="min-w-0 space-y-5 sm:space-y-6 lg:space-y-8"
           >
-            <div className="space-y-8">
+            <div className="space-y-5 sm:space-y-6 lg:space-y-8">
               {/* Terminal label */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-sm command-text text-primary">
-                <Code2 size={14} />$ whoami
+              <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-2.5 py-1 text-xs command-text text-primary sm:px-3 sm:text-sm">
+                <Code2 className="shrink-0" size={14} />$ whoami
               </div>
 
               {/* Main heading */}
-              <div className="space-y-4">
-                <h1 className="space-y-2 leading-tight">
-                  <span className="block text-5xl font-bold tracking-tight text-foreground lg:text-7xl">
+              <div className="space-y-3 sm:space-y-4">
+                <h1 className="space-y-1.5 leading-tight sm:space-y-2">
+                  <span className="block text-[clamp(1.75rem,7.5vw,4.5rem)] font-bold tracking-tight text-foreground">
                     Mehedi Mosharrof
                   </span>
-                  <span className="block font-mono text-2xl font-semibold uppercase tracking-[0.12em] text-primary sm:text-3xl lg:text-4xl">
+                  <span className="block font-mono text-[clamp(1rem,4.5vw,2.25rem)] font-semibold uppercase tracking-[0.08em] text-primary sm:tracking-[0.1em] lg:tracking-[0.12em]">
                     <span className="bg-linear-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
                       Software Engineer
                     </span>
                   </span>
                 </h1>
 
-                <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+                <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base lg:text-lg">
                   Mobile App Developer with 4+ years of experience building production-grade mobile
                   and web applications using React Native, TypeScript, React, and Next.js. Strong
                   focus on scalable frontend architecture, performance optimization, and
@@ -243,9 +243,9 @@ export function HeroPremium() {
               </div>
 
               {/* Typing animation */}
-              <div className="flex items-center gap-2 text-xl command-text">
-                <span className="text-accent">{'>'}</span>
-                <span className="text-foreground">{displayText}</span>
+              <div className="flex min-h-[2rem] items-start gap-2 text-sm command-text sm:min-h-[1.75rem] sm:items-center sm:text-base md:text-lg lg:text-xl">
+                <span className="shrink-0 text-accent">{'>'}</span>
+                <span className="min-w-0 flex-1 break-words text-foreground">{displayText}</span>
                 <motion.span
                   animate={{ opacity: [1, 0] }}
                   transition={{ duration: 0.7, repeat: Infinity }}
@@ -256,8 +256,8 @@ export function HeroPremium() {
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col gap-4 pt-8">
-                <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col gap-3 pt-4 sm:gap-4 sm:pt-6 lg:pt-8">
+                <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
                   <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
                     <Button
                       size="lg"
@@ -284,8 +284,8 @@ export function HeroPremium() {
                     </Button>
                   </motion.div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-muted-foreground command-text">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                  <span className="w-full text-xs text-muted-foreground command-text sm:w-auto sm:text-sm">
                     $ social --connect
                   </span>
                   <motion.a
@@ -319,21 +319,33 @@ export function HeroPremium() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="relative z-20 pt-6"
+              className="relative z-20 pt-4 sm:pt-6"
             >
-              <div className="glass rounded-xl border border-border/60 bg-card/50 backdrop-blur-md px-4 py-5 shadow-lg shadow-primary/5">
-                <div className="grid grid-cols-3 gap-4 divide-x divide-border/50">
-                  <div className="text-center px-2">
-                    <div className="text-3xl font-bold text-primary">4+</div>
-                    <div className="text-sm text-foreground/80 command-text mt-1">Years</div>
+              <div className="glass rounded-xl border border-border/60 bg-card/50 px-3 py-4 shadow-lg shadow-primary/5 backdrop-blur-md sm:px-4 sm:py-5">
+                <div className="grid grid-cols-3 gap-1 divide-x divide-border/50 sm:gap-4">
+                  <div className="px-1 text-center sm:px-2">
+                    <div className="text-xl font-bold tabular-nums text-primary sm:text-2xl lg:text-3xl">
+                      4+
+                    </div>
+                    <div className="mt-0.5 text-[10px] text-foreground/80 command-text sm:mt-1 sm:text-sm">
+                      Years
+                    </div>
                   </div>
-                  <div className="text-center px-2">
-                    <div className="text-3xl font-bold text-accent">15+</div>
-                    <div className="text-sm text-foreground/80 command-text mt-1">Projects</div>
+                  <div className="px-1 text-center sm:px-2">
+                    <div className="text-xl font-bold tabular-nums text-accent sm:text-2xl lg:text-3xl">
+                      15+
+                    </div>
+                    <div className="mt-0.5 text-[10px] text-foreground/80 command-text sm:mt-1 sm:text-sm">
+                      Projects
+                    </div>
                   </div>
-                  <div className="text-center px-2">
-                    <div className="text-3xl font-bold text-secondary">10000+</div>
-                    <div className="text-sm text-foreground/80 command-text mt-1">Users</div>
+                  <div className="px-1 text-center sm:px-2">
+                    <div className="text-base font-bold tabular-nums leading-none text-secondary min-[400px]:text-xl sm:text-2xl lg:text-3xl">
+                      10000+
+                    </div>
+                    <div className="mt-0.5 text-[10px] text-foreground/80 command-text sm:mt-1 sm:text-sm">
+                      Users
+                    </div>
                   </div>
                 </div>
               </div>
@@ -342,13 +354,13 @@ export function HeroPremium() {
 
           {/* Right Side - Code Editor UI */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            className="relative mt-2 min-w-0 sm:mt-4 lg:mt-0"
           >
             {/* Main editor window */}
-            <div className="glass rounded-xl overflow-hidden glow-primary">
+            <div className="glass glow-primary overflow-hidden rounded-xl">
               {/* Header */}
               <div className="terminal-header">
                 <div className="flex gap-2">
@@ -362,12 +374,12 @@ export function HeroPremium() {
               </div>
 
               {/* Code content */}
-              <div className="bg-card/50 p-6 space-y-3 font-mono text-sm">
+              <div className="space-y-2 overflow-x-auto bg-card/50 p-4 font-mono text-xs sm:space-y-3 sm:p-5 sm:text-sm md:p-6">
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="text-accent"
+                  className="whitespace-nowrap text-accent"
                 >
                   {'export const downloadResume = () => {'}
                 </motion.div>
@@ -376,7 +388,7 @@ export function HeroPremium() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}
-                  className="ml-4 text-muted-foreground"
+                  className="ml-2 whitespace-nowrap text-muted-foreground sm:ml-4"
                 >
                   {'const link = document.createElement("a")'}
                 </motion.div>
@@ -385,7 +397,7 @@ export function HeroPremium() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.7 }}
-                  className="ml-4 text-muted-foreground"
+                  className="ml-2 whitespace-nowrap text-muted-foreground sm:ml-4"
                 >
                   {"link.href = '/resume.pdf'"}
                 </motion.div>
@@ -394,7 +406,7 @@ export function HeroPremium() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.8 }}
-                  className="ml-4 text-muted-foreground"
+                  className="ml-2 whitespace-nowrap text-muted-foreground sm:ml-4"
                 >
                   {"link.download = 'Mehedi-Mosharrof-Resume.pdf'"}
                 </motion.div>
@@ -403,7 +415,7 @@ export function HeroPremium() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.9 }}
-                  className="ml-4 text-muted-foreground"
+                  className="ml-2 whitespace-nowrap text-muted-foreground sm:ml-4"
                 >
                   {'link.click()'}
                 </motion.div>
@@ -428,8 +440,12 @@ export function HeroPremium() {
                     asChild
                     className="inline-flex border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary command-text"
                   >
-                    <a href="/Mehedi_Mosharrof_Resume.pdf" download="Mehedi_Mosharrof_Resume.pdf">
-                      <Download size={16} className="mr-2" />
+                    <a
+                      href="/Mehedi_Mosharrof_Resume.pdf"
+                      download="Mehedi_Mosharrof_Resume.pdf"
+                      className="w-full justify-center sm:w-auto"
+                    >
+                      <Download size={16} className="mr-2 shrink-0" />
                       Download Resume
                     </a>
                   </Button>
@@ -441,10 +457,14 @@ export function HeroPremium() {
             <motion.div
               animate={{ y: [0, 20, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="absolute -bottom-8 -right-8 glass rounded-lg p-4 max-w-xs"
+              className="glass relative mt-4 w-full rounded-lg p-3 sm:absolute sm:mt-0 sm:max-w-xs sm:p-4 lg:-bottom-8 lg:-right-8"
             >
-              <div className="text-xs text-muted-foreground command-text mb-2">$ npm run dev</div>
-              <div className="text-primary text-xs font-mono">✓ Ready at localhost:3000</div>
+              <div className="mb-1.5 text-[10px] text-muted-foreground command-text sm:mb-2 sm:text-xs">
+                $ npm run dev
+              </div>
+              <div className="truncate font-mono text-[10px] text-primary sm:text-xs">
+                ✓ Ready at localhost:3000
+              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -453,7 +473,7 @@ export function HeroPremium() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="pointer-events-none absolute bottom-4 left-1/2 hidden -translate-x-1/2 sm:block lg:bottom-8"
         >
           <ArrowDown className="text-muted-foreground" size={24} />
         </motion.div>

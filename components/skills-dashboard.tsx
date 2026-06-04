@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { Code2, Database, Cloud, Wrench, Zap } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { GithubContributionGraph } from '@/components/github-contribution-graph';
 import { SectionHeading } from '@/components/section-heading';
 
 const skillCategories = [
@@ -67,6 +68,22 @@ const rotatingMainSkills = [
   'Redux Toolkit',
   'Expo',
 ];
+
+/** Scale SVG text so long labels fit without clipping glow or ascenders. */
+const getRotatingSkillLayout = (text: string) => {
+  const charCount = text.length;
+  const fontSize = Math.min(190, Math.max(80, Math.floor(1050 / charCount)));
+  const viewWidth = Math.max(640, Math.round(charCount * fontSize * 0.58 + 140));
+  const viewHeight = Math.round(fontSize * 1.32 + 88);
+  const textY = Math.round(fontSize * 0.88 + 44);
+
+  return {
+    fontSize,
+    viewBox: `0 0 ${viewWidth} ${viewHeight}`,
+    textX: viewWidth / 2,
+    textY,
+  };
+};
 
 const threadWaveLow = (offset: number) =>
   `M0 ${8 + offset} Q12 ${3 + offset} 24 ${8 + offset} Q36 ${13 + offset} 48 ${8 + offset}`;
@@ -174,6 +191,8 @@ function ThreadWave({ id }: { id: string }) {
 
 export function SkillsDashboard() {
   const [activeSkillIndex, setActiveSkillIndex] = useState(0);
+  const activeSkill = rotatingMainSkills[activeSkillIndex];
+  const skillLayout = getRotatingSkillLayout(activeSkill);
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -214,7 +233,7 @@ export function SkillsDashboard() {
     <section
       id="skills"
       ref={sectionRef}
-      className="py-20 px-4 relative overflow-hidden isolate mt-12"
+      className="relative isolate mt-12 overflow-x-clip overflow-y-visible px-4 py-20 pt-28 sm:pt-32"
     >
       {/* Decorative rotating background skill text */}
       <motion.div
@@ -222,16 +241,17 @@ export function SkillsDashboard() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.65, ease: 'easeOut' }}
         style={{ y: backgroundTextY }}
-        className="pointer-events-none absolute left-1/2 -top-4 -translate-x-1/2 text-center -z-10"
+        className="pointer-events-none absolute inset-x-0 top-2 z-0 flex justify-center px-2 sm:top-4 sm:px-4"
       >
         <motion.span
           animate={{ opacity: [0.12, 0.24, 0.12] }}
           transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-          className="relative inline-block w-[min(96vw,1160px)] h-[clamp(6rem,19vw,14rem)] select-none whitespace-nowrap font-mono"
+          className="relative block h-[clamp(7.5rem,20vw,16rem)] w-full max-w-[min(100%,72rem)] select-none font-mono"
         >
           <svg
-            viewBox="0 0 1000 220"
-            className="w-full h-full overflow-visible"
+            viewBox={skillLayout.viewBox}
+            preserveAspectRatio="xMidYMid meet"
+            className="h-full w-full overflow-visible"
             role="presentation"
             aria-hidden="true"
           >
@@ -241,7 +261,7 @@ export function SkillsDashboard() {
                 <stop offset="50%" stopColor="hsl(var(--accent) / 0.9)" />
                 <stop offset="100%" stopColor="hsl(var(--secondary) / 0.9)" />
               </linearGradient>
-              <filter id="skills-stroke-glow" x="-20%" y="-50%" width="140%" height="220%">
+              <filter id="skills-stroke-glow" x="-35%" y="-90%" width="170%" height="280%">
                 <feGaussianBlur stdDeviation="2.2" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
@@ -251,9 +271,9 @@ export function SkillsDashboard() {
             </defs>
             <AnimatePresence mode="wait">
               <motion.text
-                key={rotatingMainSkills[activeSkillIndex]}
-                x="500"
-                y="150"
+                key={activeSkill}
+                x={skillLayout.textX}
+                y={skillLayout.textY}
                 textAnchor="middle"
                 fill="none"
                 stroke="url(#skills-stroke-gradient)"
@@ -264,14 +284,14 @@ export function SkillsDashboard() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.55, ease: 'easeInOut' }}
                 style={{
-                  fontSize: '190px',
+                  fontSize: `${skillLayout.fontSize}px`,
                   fontWeight: 900,
                   letterSpacing: '0.015em',
                   fontFamily:
                     '"JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
                 }}
               >
-                {rotatingMainSkills[activeSkillIndex]}
+                {activeSkill}
               </motion.text>
             </AnimatePresence>
           </svg>
@@ -417,32 +437,15 @@ export function SkillsDashboard() {
           })}
         </motion.div>
 
-        {/* Stats bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '-40px' }}
           transition={{ delay: 0.3 }}
-          className="mt-16 glass rounded-xl p-6 border-border/30"
+          className="mt-12 sm:mt-16"
         >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="space-y-2">
-              <div className="text-sm text-muted-foreground command-text">$ system status</div>
-              <div className="text-foreground font-semibold">All systems operational</div>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { label: 'Experience', value: '4+' },
-                { label: 'Platforms', value: 'iOS/Android' },
-                { label: 'Stores', value: 'Play/App' },
-                { label: 'Languages', value: '2' },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-1">{stat.value}</div>
-                  <div className="text-xs text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+          <div className="glass glow-primary rounded-xl border border-border/40 p-4 sm:p-6">
+            <GithubContributionGraph />
           </div>
         </motion.div>
       </div>
